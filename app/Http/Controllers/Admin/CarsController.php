@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helper\Helpers;
 use App\Http\Controllers\Controller;
 use App\Models\Car;
 use Illuminate\Http\Request;
@@ -38,11 +39,23 @@ class CarsController extends Controller
             'location' => 'required|string|max:255'
         ]);
 
+        $imagesList=[];
+        if($request->file('images')){
+            $images =$request->file('images');
+            foreach ($images as $image){
+                $uploadedImage = Helpers::uploadDocument('images/cars/',$image);
+                if($uploadedImage){
+                    $imagePath= $uploadedImage['filePath'];
+                    array_push($imagesList,$imagePath);
+                }
+            }
+        }
+
         $carData=[
             'title' => $request->title,
             'description' => $request->description,
             'features' => $request->features,
-            'images' => $request->images,
+            'images' => json_encode($imagesList),
             'make' => $request->make,
             'model' => $request->model,
             'year' => $request->year,
@@ -58,7 +71,6 @@ class CarsController extends Controller
             'user_id'=>Auth::user()->id
         ];
         $car = Car::create($carData);
-
         return redirect()->route('admin.cars.index')->with('success', 'Car created successfully');
     }
 }

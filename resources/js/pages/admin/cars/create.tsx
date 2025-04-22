@@ -73,7 +73,7 @@ const CarCreate = () => {
 
             <div className="container">
                 <form onSubmit={handleSubmit} className="rounded-lg bg-white p-6">
-                    <div className="grid grid-cols-2 gap-6">
+                    <div className="grid grid-cols-2 gap-6 items-start">
                         <div>
                             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                 {/* Title */}
@@ -162,8 +162,6 @@ const CarCreate = () => {
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
-
-
                             {/* Year */}
                             <div>
                                 <Label htmlFor="year">Year</Label>
@@ -305,6 +303,10 @@ const CarCreate = () => {
                                     placeholder="Sydney"
                                 />
                                 {errors.location && <div className="mt-1 text-sm text-red-500">{errors.location}</div>}
+                            </div>
+
+                            <div className='border col-span-2'>
+
                             </div>
                         </div>
                     </div>
