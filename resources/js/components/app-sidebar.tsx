@@ -2,12 +2,12 @@ import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
+import { NavItemWithSubmenu, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, Car, Grape } from 'lucide-react';
+import { LayoutGrid, Car, Grape, MoveRight } from 'lucide-react';
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const mainNavItems: NavItemWithSubmenu[] = [
     {
         title: 'Dashboard',
         href: '/dashboard',
@@ -17,11 +17,25 @@ const mainNavItems: NavItem[] = [
         title: 'Cars',
         href: '/admin/cars',
         icon: Car,
+        subItems:[
+            {
+                title: 'Add new car',
+                href: '/admin/cars/create',
+                icon: MoveRight,
+            }
+        ]
     },
     {
         title: 'Categories',
         href: '/admin/categories',
         icon: Grape,
+        subItems:[
+            {
+                title: 'Categories',
+                href: '/admin/categories',
+                icon: MoveRight,
+            }
+        ]
     },
 ];
 
