@@ -1,155 +1,84 @@
-interface CarType {
-    id: number;
-    name: string;
-    image: string;
-    rating: number;
-    reviews: number;
-    transmission: string;
-    mileage: string;
-    model: string;
-    fuelType: string;
-    price: number;
-    status: 'NEW' | 'USED';
+import { SquarePen,Trash } from 'lucide-react';
+import DeleteData from '../delete-data';
+import { useState } from 'react';
+import { useForm } from '@inertiajs/react';
+import toast from 'react-hot-toast';
+
+interface CarsProps {
+    data: {
+        id: number;
+        images: string;
+        name: string;
+        condition: 'New' | 'Used';
+        title: string;
+        transmission: string;
+        mileage: string;
+        model: string;
+        fuel_type: string;
+        price: number;
+    }[];
 }
 
-const Cars = () => {
-    const cars: CarType[] = [
-        {
-            id: 1,
-            name: 'Mercedes Benz Car',
-            image: '/images/cars/01.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 45620,
-            status: 'USED',
-        },
-        {
-            id: 2,
-            name: 'Yellow Ferrari 458',
-            image: '/images/cars/02.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 90250,
-            status: 'NEW',
-        },
-        {
-            id: 3,
-            name: 'Black Audi Q7',
-            image: '/images/cars/03.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 44350,
-            status: 'NEW',
-        },
-        {
-            id: 4,
-            name: 'BMW Sports Car',
-            image: '/images/cars/04.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 78760,
-            status: 'NEW',
-        },
-        {
-            id: 5,
-            name: 'Red Porsche 911',
-            image: '/images/cars/05.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 92450,
-            status: 'NEW',
-        },
-        {
-            id: 6,
-            name: 'Tesla Model S',
-            image: '/images/cars/06.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Electric',
-            price: 85600,
-            status: 'NEW',
-        },
-        {
-            id: 7,
-            name: 'Lexus RX 350',
-            image: '/images/cars/07.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 52300,
-            status: 'USED',
-        },
-        {
-            id: 8,
-            name: 'Range Rover Sport',
-            image: '/images/cars/08.jpg',
-            rating: 5.0,
-            reviews: 58.5,
-            transmission: 'Automatic',
-            mileage: '10.15km / 1-litre',
-            model: '2023',
-            fuelType: 'Hybrid',
-            price: 88750,
-            status: 'NEW',
-        },
-    ];
+const CarComponent = ({ data }: CarsProps) => {
+        const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+        const [selectedId, setSelectedDeleteId] = useState<number | null>(null);
+    const imageData = (img: string) => {
+        const imagesArray: string[] = JSON.parse(img);
+        return `/${imagesArray[0]}`;
+    };
+
+     const { post } = useForm();
+
+    const handleDelete = (id: number) => {
+        setIsDeleteModalOpen(true);
+        setSelectedDeleteId(id);
+    };
+
+    const handleDeleteConfirm = () => {
+        post(`/admin/cars/delete/${selectedId}`, {
+            onSuccess: () => {
+                toast.success('Car deleted successfully');
+                setIsDeleteModalOpen(false);
+            },
+            onError: () => {
+                toast.error('Failed to delete car');
+            },
+        });
+    };
 
     return (
         <>
-            
-            {cars.map((car) => (
+            {data?.map((car) => [
                 <div key={car.id} className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
                     {/* Car Image Container */}
                     <div className="relative">
-                        <img src={car.image} alt={car.name} className="h-48 w-full object-cover" />
+                        <img src={imageData(car.images)} alt={car.name} className="h-48 w-full object-cover" />
                         <span
                             className={`absolute top-4 left-4 rounded-md px-3 py-1 text-sm font-medium text-white ${
-                                car.status === 'NEW' ? 'bg-emerald-500' : 'bg-red-500'
+                                car.condition === 'New' ? 'bg-emerald-500' : 'bg-red-500'
                             }`}
                         >
-                            {car.status}
+                            {car.condition}
                         </span>
+                        <div className="absolute top-4 right-4 flex items-center space-x-2">
+                            <span className='bg-gray-200 cursor-pointer text-blue-300 hover:text-blue-400 p-1 rounded-sm'> <SquarePen size={18} /></span>
+                            <span onClick={()=>handleDelete(car.id)} className='bg-gray-200 cursor-pointer text-red-300 hover:text-red-400 p-1 rounded-sm'> <Trash size={18} /></span>
+                        </div>
                     </div>
 
                     {/* Car Details */}
                     <div className="p-4">
                         <div className="mb-3">
-                            <h3 className="mb-2 text-xl font-semibold">{car.name}</h3>
+                            <h3 className="mb-2 text-xl font-semibold">{car.title}</h3>
                             <div className="mb-2 flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <svg key={i} className="h-4 w-4 fill-current text-yellow-400" viewBox="0 0 24 24">
                                         <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
                                     </svg>
                                 ))}
-                                <span className="ml-2 text-gray-500">
+                                {/* <span className="ml-2 text-gray-500">
                                     {car.rating} ({car.reviews}k Review)
-                                </span>
+                                </span> */}
                             </div>
                         </div>
 
@@ -187,7 +116,7 @@ const Cars = () => {
                                 <svg className="mr-1 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
-                                {car.fuelType}
+                                {car.fuel_type}
                             </div>
                         </div>
 
@@ -199,10 +128,13 @@ const Cars = () => {
                             </button>
                         </div>
                     </div>
-                </div>
-            ))}
+                </div>,
+            ])}
+
+            <DeleteData isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onConfirm={handleDeleteConfirm} />
+            
         </>
     );
 };
 
-export default Cars;
+export default CarComponent;

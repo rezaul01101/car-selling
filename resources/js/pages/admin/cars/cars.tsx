@@ -1,4 +1,4 @@
-import Cars from '@/components/home/cars';
+import CarComponent from '@/components/ui/car-component';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, usePage } from '@inertiajs/react';
@@ -18,7 +18,7 @@ const CarsPage = () => {
             <div className="container p-5">
                
                 <div className="grid grid-cols-4 space-y-6 space-x-6">
-                    <Cars data={cars}/>
+                    <CarComponent data={cars}/>
                     {/* <Cars /> */}
                 </div>
             </div>

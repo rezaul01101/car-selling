@@ -81,4 +81,19 @@ class CarsController extends Controller
         $car = Car::create($carData);
         return redirect()->route('admin.cars.index')->with('success', 'Car created successfully');
     }
+
+    public function destroy($id){
+        $car = Car::where('user_id',Auth::user()->id)->where('id',$id)->first();
+        if($car){
+            if($car->images){
+                $images = json_decode($car->images);
+                foreach ($images as $image){
+                    Helpers::deleteDocument($image);
+                }
+            }
+            $car->delete();
+            return redirect()->back()->with('success', 'Car deleted successfully');
+        }
+        return redirect()->back()->with('error', 'Car not found');
+    }
 }

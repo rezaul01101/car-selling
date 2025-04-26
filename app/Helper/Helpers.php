@@ -6,8 +6,6 @@ use Illuminate\Support\Facades\File;
 
 class Helpers
 {
-
-
     public static function uploadDocument($path, $file, $exist_path = null)
     {
         $imageFileType = [
@@ -41,5 +39,12 @@ class Helpers
             'filePath' => $path . $filename,
             'fileFullPath' => url($path . $filename)
         ];
+    }
+
+    public static function deleteDocument($path)
+    {
+        if (File::exists($path)) {
+            File::delete($path);
+        }
     }
 }
