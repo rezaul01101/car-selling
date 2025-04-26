@@ -23,6 +23,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/cars/create',[CarsController::class, 'create'])->name('admin.cars.create');
     Route::post('/cars/store',[CarsController::class, 'store'])->name('admin.cars.store');
     Route::post('/cars/delete/{id}',[CarsController::class, 'destroy'])->name('admin.cars.destroy');
+    Route::get('/cars/edit/{id}',[CarsController::class, 'edit'])->name('admin.cars.edit');
+    Route::post('/cars/update/{id}',[CarsController::class, 'update'])->name('admin.cars.update');
 
 
     //create car body type

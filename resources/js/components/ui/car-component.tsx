@@ -1,7 +1,7 @@
 import { SquarePen,Trash } from 'lucide-react';
 import DeleteData from '../delete-data';
 import { useState } from 'react';
-import { useForm } from '@inertiajs/react';
+import { Link, useForm } from '@inertiajs/react';
 import toast from 'react-hot-toast';
 
 interface CarsProps {
@@ -61,7 +61,9 @@ const CarComponent = ({ data }: CarsProps) => {
                             {car.condition}
                         </span>
                         <div className="absolute top-4 right-4 flex items-center space-x-2">
-                            <span className='bg-gray-200 cursor-pointer text-blue-300 hover:text-blue-400 p-1 rounded-sm'> <SquarePen size={18} /></span>
+                            <span className='bg-gray-200 cursor-pointer text-blue-300 hover:text-blue-400 p-1 rounded-sm'>
+                                <Link href={`/admin/cars/edit/${car.id}`}> <SquarePen size={18} /></Link>
+                            </span>
                             <span onClick={()=>handleDelete(car.id)} className='bg-gray-200 cursor-pointer text-red-300 hover:text-red-400 p-1 rounded-sm'> <Trash size={18} /></span>
                         </div>
                     </div>
