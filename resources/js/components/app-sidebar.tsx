@@ -22,6 +22,11 @@ const mainNavItems: NavItemWithSubmenu[] = [
                 title: 'Add new car',
                 href: '/admin/cars/create',
                 icon: MoveRight,
+            },
+            {
+                title: 'Car List',
+                href: '/admin/cars',
+                icon: MoveRight,
             }
         ]
     },

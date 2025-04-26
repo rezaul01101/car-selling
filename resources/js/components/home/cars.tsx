@@ -1,3 +1,6 @@
+import { json } from "stream/consumers";
+import { parse } from 'qs';
+
 interface CarType {
     id: number;
     name: string;
@@ -12,7 +15,8 @@ interface CarType {
     status: 'NEW' | 'USED';
 }
 
-const Cars = () => {
+
+const Cars = ({data}) => {
     const cars: CarType[] = [
         {
             id: 1,
@@ -120,35 +124,41 @@ const Cars = () => {
         },
     ];
 
+    const imageData=(img:string)=>{
+        const imagesArray: string[] = JSON.parse(img);
+        return `/${imagesArray[0]}`;
+    }
+
     return (
         <>
-            {cars.map((car) => (
-                <div key={car.id} className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+            {
+                data?.map((car)=>[
+                    <div key={car.id} className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
                     {/* Car Image Container */}
                     <div className="relative">
-                        <img src={car.image} alt={car.name} className="h-48 w-full object-cover" />
+                        <img src={imageData(car.images)} alt={car.name} className="h-48 w-full object-cover" />
                         <span
                             className={`absolute top-4 left-4 rounded-md px-3 py-1 text-sm font-medium text-white ${
-                                car.status === 'NEW' ? 'bg-emerald-500' : 'bg-red-500'
+                                car.condition === 'New' ? 'bg-emerald-500' : 'bg-red-500'
                             }`}
                         >
-                            {car.status}
+                            {car.condition}
                         </span>
                     </div>
 
                     {/* Car Details */}
                     <div className="p-4">
                         <div className="mb-3">
-                            <h3 className="mb-2 text-xl font-semibold">{car.name}</h3>
+                            <h3 className="mb-2 text-xl font-semibold">{car.title}</h3>
                             <div className="mb-2 flex items-center">
                                 {[...Array(5)].map((_, i) => (
                                     <svg key={i} className="h-4 w-4 fill-current text-yellow-400" viewBox="0 0 24 24">
                                         <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
                                     </svg>
                                 ))}
-                                <span className="ml-2 text-gray-500">
+                                {/* <span className="ml-2 text-gray-500">
                                     {car.rating} ({car.reviews}k Review)
-                                </span>
+                                </span> */}
                             </div>
                         </div>
 
@@ -186,7 +196,7 @@ const Cars = () => {
                                 <svg className="mr-1 h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                                 </svg>
-                                {car.fuelType}
+                                {car.fuel_type}
                             </div>
                         </div>
 
@@ -199,7 +209,9 @@ const Cars = () => {
                         </div>
                     </div>
                 </div>
-            ))}
+                ])
+            }
+           
         </>
     );
 };

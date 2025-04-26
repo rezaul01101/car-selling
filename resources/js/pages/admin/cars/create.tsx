@@ -3,29 +3,25 @@ import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
 import { BreadcrumbItem } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
+import { PageProps } from '@inertiajs/inertia';
 import { FormEvent } from 'react';
 import toast from 'react-hot-toast';
-
-// interface CarFormData {
-//     title: string;
-//     description: string;
-//     features: string;
-//     images: FileList | null;
-//     make: string;
-//     model: string;
-//     year: string;
-//     mileage: string;
-//     price: string;
-//     fuel_type: string;
-//     transmission: string;
-//     body_type: string;
-//     color: string;
-//     condition: string;
-//     engine_size: string;
-//     location: string;
-// }
-
+import { usePage } from '@inertiajs/react';
+type BodyTypeProp = {
+    id: number;
+    title: string;
+    slug: string;
+    image: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
+};
+type typeProps = PageProps & {
+    bodyTypes:BodyTypeProp[];
+};
 const CarCreate = () => {
+        const { bodyTypes } = usePage<typeProps>().props;
+    
     const { data, setData, post, processing, errors } = useForm({
         title: '',
         description: '',
@@ -88,6 +84,7 @@ const CarCreate = () => {
                                     />
                                     {errors.title && <div className="mt-1 text-sm text-red-500">{errors.title}</div>}
                                 </div>
+                                
 
                                 {/* Description */}
                                 <div className="col-span-2">
@@ -179,7 +176,7 @@ const CarCreate = () => {
                             <div>
                                 <Label htmlFor="mileage">Mileage</Label>
                                 <Input
-                                    type="number"
+                                    type="text"
                                     id="mileage"
                                     value={data.mileage}
                                     onChange={(e) => setData('mileage', e.target.value)}
@@ -246,11 +243,13 @@ const CarCreate = () => {
                                     className="focus-visible:border-ring focus-visible:ring-ring/50 mt-1 block w-full rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px]"
                                 >
                                     <option value="">Select body type</option>
-                                    <option value="Sedan">Sedan</option>
-                                    <option value="SUV">SUV</option>
-                                    <option value="Hatchback">Hatchback</option>
-                                    <option value="Coupe">Coupe</option>
-                                    <option value="Wagon">Wagon</option>
+                                    {
+                                        bodyTypes.map((bodyType) => (
+                                            <option key={bodyType.id} value={bodyType.id}>
+                                                {bodyType.title}
+                                            </option>
+                                        ))
+                                    }
                                 </select>
                                 {errors.body_type && <div className="mt-1 text-sm text-red-500">{errors.body_type}</div>}
                             </div>

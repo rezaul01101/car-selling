@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helper\Helpers;
 use App\Http\Controllers\Controller;
+use App\Models\BodyType;
 use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,10 +13,17 @@ use Inertia\Inertia;
 class CarsController extends Controller
 {
     public function index(){
-        return Inertia::render('admin/cars/cars');
+       $cars= Car::where('user_id',Auth::user()->id)->get();
+        return Inertia::render('admin/cars/cars',[
+            'cars' => $cars,
+        ]);
     }
 
     public function create(){
+        $bodyTypes = BodyType::get();
+        return Inertia::render('admin/cars/create', [
+            'bodyTypes' => $bodyTypes,
+        ]);
         return Inertia::render('admin/cars/create');
     }
 
@@ -28,7 +36,7 @@ class CarsController extends Controller
             'make' => 'required|string|max:255',
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
-            'mileage' => 'required|integer',
+            'mileage' => 'required',
             'price' => 'required|numeric',
             'fuel_type' => 'required|string|max:255',
             'transmission' => 'required|string|max:255',
