@@ -72,8 +72,8 @@ class CarExtentionController extends Controller
     public function destroy($id)
     {
         // Find the body type by ID and delete it
-        // $bodyType = BodyType::findOrFail($id);
-        // $bodyType->delete();
+        $bodyType = BodyType::findOrFail($id);
+        $bodyType->delete();
 
         return redirect()->route('admin.cars.create-body-type')->with('success', 'Body type deleted successfully.');
     }

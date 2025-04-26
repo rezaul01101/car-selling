@@ -26,6 +26,8 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     //create car body type
     Route::get('/body-types',[CarExtentionController::class, 'index'])->name('admin.cars.create-body-type');
     Route::post('/body-types/store',[CarExtentionController::class, 'store'])->name('admin.cars.create-body-type.store');
+    Route::post('/body-types/delete/{id}',[CarExtentionController::class, 'destroy'])->name('admin.cars.create-body-type.destroy');
+
 });
 
 

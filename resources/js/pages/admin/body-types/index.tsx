@@ -1,3 +1,4 @@
+import DeleteData from '@/components/delete-data';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AppLayout from '@/layouts/app-layout';
@@ -5,7 +6,7 @@ import { BreadcrumbItem } from '@/types';
 import { PageProps } from '@inertiajs/inertia';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { SquarePen, Trash } from 'lucide-react';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 type BodyTypeProp = {
     id: number;
@@ -22,21 +23,8 @@ type CustomPageProps = PageProps & {
 };
 const BodyTypes = () => {
     const { typesList } = usePage<CustomPageProps>().props;
-    console.log('typesList', typesList);
-    const categories = [
-        { type: 'Sedan', image: '/images/categories/1.png' },
-        { type: 'Compact', image: '/images/categories/2.png' },
-        { type: 'Convertible', image: '/images/categories/3.png' },
-        { type: 'SUV', image: '/images/categories/4.png' },
-        { type: 'Crossover', image: '/images/categories/5.png' },
-        { type: 'Wagon', image: '/images/categories/6.png' },
-        { type: 'Sports', image: '/images/categories/7.png' },
-        { type: 'Pickup', image: '/images/categories/8.png' },
-        { type: 'Family MPV', image: '/images/categories/9.png' },
-        { type: 'Coupe', image: '/images/categories/10.png' },
-        { type: 'Electric', image: '/images/categories/11.png' },
-        { type: 'Luxury', image: '/images/categories/12.png' },
-    ];
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedId, setSelectedDeleteId] = useState<number | null>(null);
 
     const breadcrumbs: BreadcrumbItem[] = [
         {
@@ -64,6 +52,20 @@ const BodyTypes = () => {
         post('/admin/body-types/store', {
             onSuccess: () => {
                 toast.success('Body type added successfully');
+            },
+        });
+    };
+
+    const handleDelete = (id: number) => {
+        setIsDeleteModalOpen(true);
+        setSelectedDeleteId(id);
+    };
+
+    const handleDeleteConfirm = () => {
+        post(`/admin/body-types/delete/${selectedId}`, {
+            onSuccess: () => {
+                toast.success('Body type deleted successfully');
+                setIsDeleteModalOpen(false);
             },
         });
     };
@@ -124,32 +126,6 @@ const BodyTypes = () => {
                     <div className="col-span-2">
                         <div className="px-4 py-16 sm:px-6 lg:px-8">
                             <div className="mx-auto max-w-7xl">
-                                {/* Grid of Categories */}
-                                <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
-                                    {categories.map((category, index) => (
-                                        <div
-                                            key={index}
-                                            className="relative cursor-pointer rounded-lg bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md"
-                                        >
-                                            <div className="aspect-w-16 aspect-h-12 mb-4">
-                                                <img src={category.image} alt={`${category.type} car`} className="h-full w-full object-contain" />
-                                            </div>
-                                            <h3 className="text-center font-medium text-gray-800">{category.type}</h3>
-
-                                            <div className="absolute top-2 right-2">
-                                                <div className="mb-1 text-xs text-gray-300 hover:text-blue-400">
-                                                    {' '}
-                                                    <SquarePen size={20} />
-                                                </div>
-                                                <div className="text-xs text-gray-300 hover:text-red-400">
-                                                    {' '}
-                                                    <Trash size={20} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                                <h1>server</h1>
                                 <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
                                     {typesList.map((type: BodyTypeProp, index: number) => (
                                         <div
@@ -171,7 +147,7 @@ const BodyTypes = () => {
                                                     {' '}
                                                     <SquarePen size={20} />
                                                 </div>
-                                                <div className="text-xs text-gray-300 hover:text-red-400">
+                                                <div onClick={() => handleDelete(type.id)} className="text-xs text-gray-300 hover:text-red-400">
                                                     {' '}
                                                     <Trash size={20} />
                                                 </div>
@@ -184,6 +160,7 @@ const BodyTypes = () => {
                     </div>
                 </div>
             </div>
+            <DeleteData isOpen={isDeleteModalOpen} onClose={() => setIsDeleteModalOpen(false)} onConfirm={handleDeleteConfirm} />
         </AppLayout>
     );
 };
