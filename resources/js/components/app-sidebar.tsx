@@ -26,13 +26,13 @@ const mainNavItems: NavItemWithSubmenu[] = [
         ]
     },
     {
-        title: 'Categories',
-        href: '/admin/categories',
+        title: 'Car Extenitons',
+        href: '#',
         icon: Grape,
         subItems:[
             {
-                title: 'Categories',
-                href: '/admin/categories',
+                title: 'Body Types',
+                href: '/admin/body-types',
                 icon: MoveRight,
             }
         ]
