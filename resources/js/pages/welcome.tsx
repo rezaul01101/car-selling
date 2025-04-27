@@ -1,12 +1,13 @@
 import Cars from '@/components/home/cars';
 import Category from '@/components/home/category';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function Welcome() {
+        const { bodyTypes,cars } = usePage().props;
     return (
         <FrontendLayout>
-            <Head title="Welcome to Motex" />
+            <Head title="Welcome to VehicleMart" />
             {/* Hero Section */}
             <div className="relative overflow-hidden bg-gradient-to-r from-pink-50 to-pink-100">
                 <div className="container mx-auto px-4 py-20">
@@ -41,7 +42,7 @@ export default function Welcome() {
                     </div>
                 </div>
             </div>
-            <Category />
+            <Category data={bodyTypes}/>
             <div className="px-4 py-16 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-7xl">
                     {/* Header Section */}
@@ -62,8 +63,7 @@ export default function Welcome() {
                 </div>
                 <div className="container mx-auto">
                     <div className="grid grid-cols-4 space-x-6 space-y-6">
-                        <Cars />
-                        <Cars />
+                        <Cars data={cars} />
                     </div>
                 </div>
             </div>

@@ -1,18 +1,5 @@
-const Category = () => {
-    const categories = [
-        { type: 'Sedan', image: '/images/categories/1.png' },
-        { type: 'Compact', image: '/images/categories/2.png' },
-        { type: 'Convertible', image: '/images/categories/3.png' },
-        { type: 'SUV', image: '/images/categories/4.png' },
-        { type: 'Crossover', image: '/images/categories/5.png' },
-        { type: 'Wagon', image: '/images/categories/6.png' },
-        { type: 'Sports', image: '/images/categories/7.png' },
-        { type: 'Pickup', image: '/images/categories/8.png' },
-        { type: 'Family MPV', image: '/images/categories/9.png' },
-        { type: 'Coupe', image: '/images/categories/10.png' },
-        { type: 'Electric', image: '/images/categories/11.png' },
-        { type: 'Luxury', image: '/images/categories/12.png' },
-    ];
+const Category = ({data}) => {
+
 
     return (
         <div className="px-4 py-16 sm:px-6 lg:px-8">
@@ -35,12 +22,12 @@ const Category = () => {
 
                 {/* Grid of Categories */}
                 <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                    {categories.map((category, index) => (
+                    {data.map((category, index) => (
                         <div key={index} className="cursor-pointer rounded-lg bg-white p-4 shadow-sm transition-shadow duration-300 hover:shadow-md">
                             <div className="aspect-w-16 aspect-h-12 mb-4">
-                                <img src={category.image} alt={`${category.type} car`} className="h-full w-full object-contain" />
+                                <img src={category.image} alt={`${category.title} car`} className="h-full w-full object-contain" />
                             </div>
-                            <h3 className="text-center font-medium text-gray-800">{category.type}</h3>
+                            <h3 className="text-center font-medium text-gray-800">{category.title}</h3>
                         </div>
                     ))}
                 </div>

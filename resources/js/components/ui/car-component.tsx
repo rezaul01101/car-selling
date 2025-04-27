@@ -52,7 +52,7 @@ const CarComponent = ({ data }: CarsProps) => {
                 <div key={car.id} className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
                     {/* Car Image Container */}
                     <div className="relative">
-                        <img src={imageData(car.images)} alt={car.name} className="h-48 w-full object-cover" />
+                        <img src={car.images?imageData(car.images):''} alt={car.name} className="h-48 w-full object-cover" />
                         <span
                             className={`absolute top-4 left-4 rounded-md px-3 py-1 text-sm font-medium text-white ${
                                 car.condition === 'New' ? 'bg-emerald-500' : 'bg-red-500'
