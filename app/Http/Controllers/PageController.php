@@ -24,4 +24,12 @@ class PageController extends Controller
     {
         return Inertia::render('frontend/about/index');
     }
+
+    public function carDetails($id)
+    {
+        $car=Car::findOrFail($id);
+        return Inertia::render('frontend/details/details',[
+            'car'=>$car,
+        ]);
+    }
 }

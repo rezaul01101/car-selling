@@ -15,6 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::get('/about',[PageController::class,'index'])->name('index');
+Route::get('/car/{id}/{slug?}',[PageController::class,'carDetails'])->name('details');
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/cars', [CarsController::class, 'index'])->name('admin.cars.index');

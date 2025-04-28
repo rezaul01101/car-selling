@@ -1,3 +1,6 @@
+import { Link } from "@inertiajs/react";
+
+
 interface CarType {
     id: number;
     name: string;
@@ -196,9 +199,9 @@ const Cars = ({ data }: CarType[]) => {
                         {/* Price and Details Button */}
                         <div className="mt-4 flex items-center justify-between">
                             <span className="text-xl font-bold text-red-600">${car.price.toLocaleString()}</span>
-                            <button className="rounded-md bg-red-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-red-700">
+                            <Link href={`car/${car.id}/${car.title}`} className="rounded-md bg-red-600 px-6 py-2 text-white transition-colors duration-300 hover:bg-red-700">
                                 Details
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </div>
