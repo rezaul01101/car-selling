@@ -62,7 +62,7 @@ export default function Welcome() {
                     </div>
                 </div>
                 <div className="container mx-auto">
-                    <div className="grid grid-cols-4 space-x-6 space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-4 space-x-6 space-y-6">
                         <Cars data={cars} />
                     </div>
                 </div>

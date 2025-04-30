@@ -16,7 +16,7 @@ const DetailsPage = () => {
 
     return (
         <FrontendLayout>
-            <Head title="About Us" />
+            <Head title={car.title} />
             <PageHeader title={car.title} />
             <div className="bg-gray-100 py-25">
                 <div className="container mx-auto grid grid-cols-1 gap-8 lg:grid-cols-5">

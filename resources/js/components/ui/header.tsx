@@ -9,27 +9,29 @@ const Header = () => {
  {/* Top Bar */}
  <div className="bg-red-600 px-4 py-2 text-white">
                 <div className="container mx-auto flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                        <span className="flex items-center">
-                            <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                            </svg>
-                            info@example.com
-                        </span>
-                        <span className="flex items-center">
-                            <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
-                            </svg>
-                            +2 123 654 7898
-                        </span>
-                        <span className="flex items-center">
-                            <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                            </svg>
-                            Sun - Fri (08AM - 10PM)
-                        </span>
-                    </div>
+                   <div className='hidden md:block'>
+                    <div className="flex items-center space-x-4 ">
+                            <span className="flex items-center">
+                                <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                    <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                                </svg>
+                                info@example.com
+                            </span>
+                            <span className="flex items-center">
+                                <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+                                </svg>
+                                +2 123 654 7898
+                            </span>
+                            <span className="flex items-center">
+                                <svg className="mr-1 h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                                </svg>
+                                Sun - Fri (08AM - 10PM)
+                            </span>
+                        </div>
+                   </div>
                     <div className="flex items-center space-x-4">
                             {
                                 auth.user ?
